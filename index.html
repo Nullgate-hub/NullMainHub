@@ -6,7 +6,6 @@
 <title>NullGate — Roblox Anti-Cheat</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -20,7 +19,7 @@
   --primary-dim:rgba(34,211,238,0.12);
   --primary-glow:rgba(34,211,238,0.4);
   --green:#34d399;
-  --red:#f87171;
+  --red:rgba(248,113,113,0.6);
 }
 
 body{
@@ -49,7 +48,6 @@ body::after{
 }
 @keyframes drift{from{transform:translateY(0)}to{transform:translateY(14px)}}
 
-/* Reveal on scroll */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease}
 .reveal.active{opacity:1;transform:translateY(0)}
 
@@ -64,19 +62,20 @@ nav{
 .logo{
   font-family:'JetBrains Mono',monospace;font-weight:700;font-size:19px;
   display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--text);text-decoration:none;
+  flex-shrink:0;
 }
 .logo em{color:var(--primary);font-style:normal}
-.nav-links{display:flex;align-items:center;gap:22px;list-style:none}
+.nav-links{display:flex;align-items:center;gap:20px;list-style:none}
 .nav-links a{
   font-family:'JetBrains Mono',monospace;font-size:13px;
-  color:var(--muted);text-decoration:none;cursor:pointer;transition:color .2s;
+  color:var(--muted);text-decoration:none;cursor:pointer;transition:color .2s;white-space:nowrap;
 }
 .nav-links a:hover{color:var(--primary)}
 .nav-btn{
   font-family:'JetBrains Mono',monospace;font-size:13px;
   padding:7px 16px;border-radius:8px;
   border:1px solid var(--primary);color:var(--primary);
-  background:transparent;cursor:pointer;transition:background .2s;
+  background:transparent;cursor:pointer;transition:background .2s;white-space:nowrap;
 }
 .nav-btn:hover{background:var(--primary-dim)}
 
@@ -97,7 +96,7 @@ main{position:relative;z-index:1;padding-top:60px}
 @keyframes pop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
 .hero h1{
   font-family:'JetBrains Mono',monospace;
-  font-size:clamp(28px,5vw,62px);font-weight:700;line-height:1.1;
+  font-size:clamp(26px,5vw,62px);font-weight:700;line-height:1.1;
   margin-bottom:22px;min-height:1.2em;
 }
 .cur{
@@ -144,7 +143,12 @@ main{position:relative;z-index:1;padding-top:60px}
 .tprompt{color:var(--primary)}
 
 /* ===== PACKAGE CARDS ===== */
-.pkg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:18px;margin-bottom:44px;align-items:start}
+.pkg-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;margin-bottom:44px;
+  align-items:start;
+}
 .pkg{
   background:var(--card);border:1px solid var(--border);border-radius:13px;
   padding:26px;display:flex;flex-direction:column;gap:11px;
@@ -158,20 +162,30 @@ main{position:relative;z-index:1;padding-top:60px}
 }
 .pkg:hover::after{opacity:1}
 .pkg:hover{border-color:rgba(34,211,238,.35);box-shadow:0 0 26px -10px var(--primary-glow)}
-.pkg-top{position:absolute;top:0;left:0;right:0;height:3px;background:var(--primary)}
-.pkg-featured{border-color:var(--primary);box-shadow:0 0 36px -10px var(--primary-glow);transform:translateY(-6px)}
-.pkg-featured:hover{transform:translateY(-9px)}
+
+/* Featured card */
+.pkg-featured{
+  border-color:var(--primary);
+  box-shadow:0 0 36px -8px var(--primary-glow);
+  transform:translateY(-8px);
+  background:linear-gradient(160deg,#0f2030,#0f1b28);
+}
+.pkg-featured:hover{transform:translateY(-11px);box-shadow:0 0 44px -6px var(--primary-glow)}
+.pkg-top{position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(to right,var(--primary),#38bdf8)}
+
 .pkg-row{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap}
 
-/* Badge — NO animation, static only */
+/* Static badge — no animation at all */
 .badge{
-  display:inline-block;
+  display:inline-flex;align-items:center;gap:5px;
   background:var(--primary);color:#060d14;
   font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
   letter-spacing:.04em;padding:4px 9px;border-radius:6px;
   white-space:nowrap;flex-shrink:0;
   box-shadow:0 0 8px 1px var(--primary-glow);
 }
+.badge svg{flex-shrink:0}
+
 .pkg-name{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16px}
 .pkg-name-f{color:var(--primary)}
 .pkg-price{font-size:25px;font-weight:700}
@@ -212,9 +226,9 @@ main{position:relative;z-index:1;padding-top:60px}
 .tbl-outer tr:last-child td{border-bottom:none}
 .tbl-outer tr:hover td{background:rgba(34,211,238,.02)}
 
-/* Checkmarks — small and clean */
-.ck{color:var(--green);font-size:13px;font-weight:700}
-.cx{color:rgba(248,113,113,.55);font-size:13px;font-weight:700}
+/* SVG check / cross — fixed size, no font scaling */
+.ck{display:inline-flex;align-items:center;justify-content:center;color:var(--green)}
+.cx{display:inline-flex;align-items:center;justify-content:center;color:rgba(248,113,113,.6)}
 
 .tbl-notes{text-align:center}
 .tn1{font-size:13px;color:var(--muted);margin-bottom:5px}
@@ -222,10 +236,12 @@ main{position:relative;z-index:1;padding-top:60px}
 .tn2{font-size:11px;color:rgba(122,152,181,.5);margin-bottom:3px}
 
 /* ===== NOTE CARDS ===== */
-.notes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:14px}
-.note{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;gap:13px}
-.nem{font-size:20px;flex-shrink:0;margin-top:2px;line-height:1}
-.nem img.emoji{width:20px;height:20px;vertical-align:top}
+.notes-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.note{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;gap:13px;align-items:flex-start}
+.nem{flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:9px}
+.nem-green{background:rgba(52,211,153,.12);color:var(--green)}
+.nem-yellow{background:rgba(251,191,36,.1);color:#fbbf24}
+.nem-blue{background:var(--primary-dim);color:var(--primary)}
 .nt{font-weight:700;margin-bottom:5px;font-size:14px}
 .nb{font-size:13px;color:var(--muted);line-height:1.6}
 
@@ -259,8 +275,7 @@ main{position:relative;z-index:1;padding-top:60px}
   padding:56px 36px;background:rgba(15,27,40,.4);
   display:inline-block;min-width:280px;
 }
-.picon{font-size:34px;margin-bottom:14px;line-height:1;opacity:.25}
-.picon img.emoji{width:34px;height:34px}
+.picon{margin-bottom:16px;display:flex;justify-content:center;opacity:.25}
 .proofs-empty p{color:rgba(122,152,181,.45);font-family:'JetBrains Mono',monospace;font-size:15px}
 .proofs-empty small{color:rgba(122,152,181,.28);font-size:12px;margin-top:7px;display:block}
 
@@ -272,11 +287,20 @@ footer{padding:28px 22px;border-top:1px solid var(--border);background:var(--car
 .fcopy{font-size:12px;color:var(--muted)}
 
 /* ===== RESPONSIVE ===== */
-@media(max-width:640px){
-  .nav-links{display:none}
+@media(max-width:900px){
+  .pkg-grid{grid-template-columns:1fr}
+  .notes-grid{grid-template-columns:1fr}
   .pkg-featured{transform:none}
   .pkg-featured:hover{transform:translateY(-4px)}
+}
+@media(max-width:640px){
+  .nav-links{display:none}
   .section,.contact,.proofs{padding:60px 0}
+  .hero h1{font-size:26px}
+  .contact-in h2{font-size:22px}
+  .dbox{font-size:14px;padding:13px 18px}
+  .wrap{padding:0 16px}
+  nav{padding:0 16px}
 }
 </style>
 </head>
@@ -343,22 +367,28 @@ footer{padding:28px 22px;border-top:1px solid var(--border);background:var(--car
 
     <div class="pkg-grid reveal">
 
+      <!-- Small -->
       <div class="pkg">
         <div class="pkg-name">Small Anti-Cheat</div>
         <div class="pkg-price">10 – 20 R$</div>
         <div class="pkg-desc">For small projects and hobby games. Basic exploit detection, lightweight footprint, and easy to integrate. A solid starting point for any project.</div>
       </div>
 
+      <!-- Medium (featured) -->
       <div class="pkg pkg-featured">
         <div class="pkg-top"></div>
         <div class="pkg-row">
           <div class="pkg-name pkg-name-f">Medium Anti-Cheat</div>
-          <span class="badge">⭐ MOST RECOMMENDED</span>
+          <span class="badge">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            MOST RECOMMENDED
+          </span>
         </div>
         <div class="pkg-price pkg-price-f">20 – 45 R$</div>
         <div class="pkg-desc">For growing games with moderate player counts. Covers most common exploits, speed hacks, and teleport abuse. Best balance of protection and performance.</div>
       </div>
 
+      <!-- High-End -->
       <div class="pkg">
         <div class="pkg-name">High-End Anti-Cheat</div>
         <div class="pkg-price">45 – 100 R$</div>
@@ -367,7 +397,7 @@ footer{padding:28px 22px;border-top:1px solid var(--border);background:var(--car
 
     </div>
 
-    <!-- Table -->
+    <!-- Comparison Table -->
     <div class="reveal">
       <div class="tbl-outer" id="tscroll">
         <table>
@@ -380,15 +410,50 @@ footer{padding:28px 22px;border-top:1px solid var(--border);background:var(--car
             </tr>
           </thead>
           <tbody>
-            <tr><td>Price Range</td><td>10–20 R$</td><td class="fc">20–45 R$</td><td>45–100 R$</td></tr>
-            <tr><td>Exploit Detection</td><td>Basic</td><td class="fc">Advanced</td><td>Advanced+</td></tr>
-            <tr><td>Speed Hack Detection</td><td><span class="ck">✔</span></td><td class="fc"><span class="ck">✔</span></td><td><span class="ck">✔</span></td></tr>
-            <tr><td>Teleport Abuse Detection</td><td><span class="cx">✘</span></td><td class="fc"><span class="ck">✔</span></td><td><span class="ck">✔</span></td></tr>
-            <tr><td>Fly / Noclip Detection</td><td><span class="cx">✘</span></td><td class="fc"><span class="ck">✔</span></td><td><span class="ck">✔</span></td></tr>
-            <tr><td>False-Ban Unban Tool</td><td><span class="ck">✔</span></td><td class="fc"><span class="ck">✔</span></td><td><span class="ck">✔</span></td></tr>
-            <tr><td>Server Size Suitability</td><td>Small</td><td class="fc">Medium</td><td>Large</td></tr>
-            <tr><td>Security Vulnerability</td><td>Standard</td><td class="fc">Reduced</td><td>Minimal</td></tr>
-            <tr><td>Best For</td><td>Hobby projects</td><td class="fc">Most games</td><td>Serious titles</td></tr>
+            <tr>
+              <td>Price Range</td>
+              <td>10–20 R$</td><td class="fc">20–45 R$</td><td>45–100 R$</td>
+            </tr>
+            <tr>
+              <td>Exploit Detection</td>
+              <td>Basic</td><td class="fc">Advanced</td><td>Advanced+</td>
+            </tr>
+            <tr>
+              <td>Speed Hack Detection</td>
+              <td><span class="ck"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+              <td class="fc"><span class="ck"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+              <td><span class="ck"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            </tr>
+            <tr>
+              <td>Teleport Abuse Detection</td>
+              <td><span class="cx"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+              <td class="fc"><span class="ck"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+              <td><span class="ck"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            </tr>
+            <tr>
+              <td>Fly / Noclip Detection</td>
+              <td><span class="cx"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span></td>
+              <td class="fc"><span class="ck"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+              <td><span class="ck"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            </tr>
+            <tr>
+              <td>False-Ban Unban Tool</td>
+              <td><span class="ck"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+              <td class="fc"><span class="ck"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+              <td><span class="ck"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></td>
+            </tr>
+            <tr>
+              <td>Server Size Suitability</td>
+              <td>Small</td><td class="fc">Medium</td><td>Large</td>
+            </tr>
+            <tr>
+              <td>Security Vulnerability</td>
+              <td>Standard</td><td class="fc">Reduced</td><td>Minimal</td>
+            </tr>
+            <tr>
+              <td>Best For</td>
+              <td>Hobby projects</td><td class="fc">Most games</td><td>Serious titles</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -408,7 +473,9 @@ footer{padding:28px 22px;border-top:1px solid var(--border);background:var(--car
     <div class="notes-grid reveal">
 
       <div class="note">
-        <div class="nem">🛡️</div>
+        <div class="nem nem-green">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
         <div>
           <div class="nt">Accountability</div>
           <div class="nb">We take full responsibility if someone is falsely banned. Every script includes a built-in unban tool to fix it fast.</div>
@@ -416,7 +483,9 @@ footer{padding:28px 22px;border-top:1px solid var(--border);background:var(--car
       </div>
 
       <div class="note">
-        <div class="nem">⚠️</div>
+        <div class="nem nem-yellow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
         <div>
           <div class="nt">Refund Policy</div>
           <div class="nb">No refunds after purchase — unless the anti-cheat is completely broken on delivery.</div>
@@ -424,7 +493,9 @@ footer{padding:28px 22px;border-top:1px solid var(--border);background:var(--car
       </div>
 
       <div class="note">
-        <div class="nem">ℹ️</div>
+        <div class="nem nem-blue">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        </div>
         <div>
           <div class="nt">Expectations</div>
           <div class="nb">These anti-cheats cannot stop every hacker, but they will stop most. Choose the best package for your game's scale.</div>
@@ -453,7 +524,10 @@ footer{padding:28px 22px;border-top:1px solid var(--border);background:var(--car
           </button>
         </div>
         <div><span class="cphint" id="cphint">Discord username — click the icon to copy</span></div>
-        <div class="cpok" id="cpok">✔ Copied to clipboard!</div>
+        <div class="cpok" id="cpok">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:4px"><polyline points="20 6 9 17 4 12"/></svg>
+          Copied to clipboard!
+        </div>
       </div>
     </div>
   </div>
@@ -465,7 +539,9 @@ footer{padding:28px 22px;border-top:1px solid var(--border);background:var(--car
     <div class="proofs-in reveal">
       <h2>Proofs</h2>
       <div class="proofs-empty">
-        <div class="picon">📂</div>
+        <div class="picon">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        </div>
         <p>Nothing here yet!</p>
         <small>Check back later for demonstrations and vouches.</small>
       </div>
@@ -488,13 +564,12 @@ footer{padding:28px 22px;border-top:1px solid var(--border);background:var(--car
 </footer>
 
 <script>
-/* --- HERO TITLE TYPING --- */
+/* HERO TYPING */
 const TITLE = "Roblox Anti-Cheat, Done Right.";
 const SUB   = "Affordable, effective anti-cheat for your Roblox game. Over a year of Luau experience protecting growing communities.";
 const titleEl = document.getElementById("htitle");
 const curEl   = titleEl.querySelector(".cur");
 let ti = 0;
-
 function typeTitle() {
   if (ti < TITLE.length) {
     titleEl.insertBefore(document.createTextNode(TITLE[ti++]), curEl);
@@ -502,20 +577,17 @@ function typeTitle() {
   } else {
     setTimeout(() => {
       const s = document.getElementById("hsub");
-      s.style.transition = "opacity .8s ease";
-      s.style.opacity = "1";
-      s.textContent = SUB;
+      s.style.transition = "opacity .8s ease"; s.style.opacity = "1"; s.textContent = SUB;
       setTimeout(() => {
         const b = document.getElementById("hbtn");
-        b.style.transition = "opacity .6s ease";
-        b.style.opacity = "1";
+        b.style.transition = "opacity .6s ease"; b.style.opacity = "1";
       }, 550);
     }, 180);
   }
 }
 setTimeout(typeTitle, 300);
 
-/* --- TERMINAL TYPING --- */
+/* TERMINAL TYPING */
 const TERM = [
   "Hello! Looking for an anti-cheat for your game?",
   "And for a low price? You've found the right person!",
@@ -531,47 +603,41 @@ const TERM = [
   "",
   "DM me on Discord: version11111."
 ].join("\n");
-
-const ttEl  = document.getElementById("ttext");
-const tcEl  = document.getElementById("tcur");
+const ttEl = document.getElementById("ttext");
+const tcEl = document.getElementById("tcur");
 let ki = 0;
-
 function typeTerm() {
   if (ki < TERM.length) {
     if (TERM[ki] === "\n") ttEl.appendChild(document.createElement("br"));
     else ttEl.appendChild(document.createTextNode(TERM[ki]));
-    ki++;
-    setTimeout(typeTerm, 8);
-  } else {
-    tcEl.style.display = "none";
-  }
+    ki++; setTimeout(typeTerm, 8);
+  } else { tcEl.style.display = "none"; }
 }
 setTimeout(typeTerm, 1600);
 
-/* --- SCROLL REVEAL --- */
+/* SCROLL REVEAL */
 const obs = new IntersectionObserver(es => {
   es.forEach(e => { if (e.isIntersecting) e.target.classList.add("active"); });
 }, { threshold: 0.1 });
 document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
 
-/* --- NAV SCROLL --- */
+/* NAV SCROLL */
 function go(id) {
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({ behavior: "smooth" });
 }
 
-/* --- COPY DISCORD --- */
+/* COPY DISCORD */
 function copyIt() {
   navigator.clipboard.writeText("version11111.").then(() => {
-    const ok   = document.getElementById("cpok");
+    const ok = document.getElementById("cpok");
     const hint = document.getElementById("cphint");
-    ok.style.display   = "block";
-    hint.style.display = "none";
+    ok.style.display = "block"; hint.style.display = "none";
     setTimeout(() => { ok.style.display = "none"; hint.style.display = ""; }, 2200);
   });
 }
 
-/* --- TABLE DRAG SCROLL --- */
+/* TABLE DRAG SCROLL */
 const tbl = document.getElementById("tscroll");
 let down = false, sx, sl;
 tbl.addEventListener("mousedown",  e => { down = true; sx = e.pageX - tbl.offsetLeft; sl = tbl.scrollLeft; });
@@ -581,13 +647,6 @@ tbl.addEventListener("mousemove",  e => {
   if (!down) return;
   e.preventDefault();
   tbl.scrollLeft = sl - (e.pageX - tbl.offsetLeft - sx) * 1.4;
-});
-
-/* --- TWEMOJI (custom emoji rendering) --- */
-twemoji.parse(document.body, {
-  folder: "svg",
-  ext: ".svg",
-  base: "https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/"
 });
 </script>
 
