@@ -1,359 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>NullGate — Roblox Anti-Cheat</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-
-:root{
-  --bg:#060d14;
-  --panel:#0c1520;
-  --card:#0f1b28;
-  --border:#1a2d42;
-  --text:#dce9f5;
-  --muted:#7a98b5;
-  --primary:#22d3ee;
-  --primary-dim:rgba(34,211,238,0.15);
-  --primary-glow:rgba(34,211,238,0.5);
-  --accent:#38bdf8;
-  --green:#34d399;
-  --red:rgba(248,113,113,0.6);
-  --gold:#fbbf24;
-}
-
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Space Grotesk',sans-serif;
-  overflow-x:hidden;
-  min-height:100vh;
-}
-
-/* Grid background */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(circle at 50% 0%, rgba(34,211,238,0.07) 0%, transparent 60%),
-    linear-gradient(to right,rgba(34,211,238,0.04) 1px,transparent 1px),
-    linear-gradient(to bottom,rgba(34,211,238,0.04) 1px,transparent 1px);
-  background-size:100% 100%, 40px 40px, 40px 40px;
-  pointer-events:none;
-  z-index:0;
-}
-
-/* Floating glow drift */
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(ellipse at 20% 30%, rgba(34,211,238,0.05), transparent 45%),
-    radial-gradient(ellipse at 80% 70%, rgba(56,189,248,0.04), transparent 45%);
-  animation:drift 14s ease-in-out infinite alternate;
-  pointer-events:none;
-  z-index:0;
-}
-
-@keyframes drift{from{transform:translateY(0)}to{transform:translateY(14px)}}
-
-/* ===== REVEAL ===== */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease}
-.reveal.active{opacity:1;transform:translateY(0)}
-
-/* ===== NAV ===== */
-nav{
-  position:fixed;top:0;left:0;right:0;
-  z-index:100;
-  background:rgba(6,13,20,0.85);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);
-  height:60px;
-  display:flex;align-items:center;
-  padding:0 32px;
-}
-.nav-inner{
-  width:100%;max-width:1100px;margin:0 auto;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.logo{
-  font-family:'JetBrains Mono',monospace;
-  font-weight:700;font-size:20px;
-  display:flex;align-items:center;gap:8px;
-  cursor:pointer;text-decoration:none;color:var(--text);
-}
-.logo span{color:var(--primary)}
-.nav-links{display:flex;align-items:center;gap:24px;list-style:none}
-.nav-links a{
-  font-family:'JetBrains Mono',monospace;font-size:13px;
-  color:var(--muted);text-decoration:none;transition:color 0.2s;
-}
-.nav-links a:hover{color:var(--primary)}
-.nav-cta{
-  font-family:'JetBrains Mono',monospace;font-size:13px;
-  padding:7px 18px;border-radius:8px;
-  border:1px solid var(--primary);color:var(--primary);
-  background:transparent;cursor:pointer;transition:0.2s;
-}
-.nav-cta:hover{background:var(--primary-dim)}
-
-/* ===== MAIN ===== */
-main{position:relative;z-index:1;padding-top:60px}
-
-.container{max-width:1100px;margin:0 auto;padding:0 24px}
-
-/* ===== HERO ===== */
-.hero{
-  min-height:90vh;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;padding:40px 24px;
-}
-.hero-icon{
-  width:80px;height:80px;
-  background:var(--primary-dim);
-  border:1px solid rgba(34,211,238,0.25);
-  border-radius:20px;
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:32px;
-  animation:popIn 0.5s ease;
-}
-@keyframes popIn{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
-
-.hero h1{
-  font-family:'JetBrains Mono',monospace;
-  font-size:clamp(36px,6vw,68px);
-  font-weight:700;line-height:1.1;
-  margin-bottom:24px;
-  min-height:1.3em;
-}
-.cursor{
-  display:inline-block;width:3px;height:0.85em;
-  background:var(--primary);margin-left:4px;vertical-align:middle;
-  animation:blink 0.8s steps(1) infinite;
-}
-@keyframes blink{50%{opacity:0}}
-
-.hero p{
-  font-size:clamp(16px,2vw,20px);color:var(--muted);
-  max-width:560px;margin-bottom:40px;line-height:1.6;
-  animation:fadeUp 1s ease 1.4s both;
-}
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-
-.btn-primary{
-  font-family:'JetBrains Mono',monospace;
-  padding:16px 36px;font-size:16px;
-  background:var(--primary);color:#060d14;font-weight:700;
-  border:none;border-radius:10px;cursor:pointer;
-  display:inline-flex;align-items:center;gap:8px;
-  transition:0.2s;
-  box-shadow:0 0 24px -6px var(--primary-glow);
-  animation:fadeUp 1s ease 1.9s both;
-}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 36px -4px var(--primary-glow)}
-
-/* ===== ABOUT ===== */
-.section{padding:96px 0}
-.section-alt{background:rgba(255,255,255,0.015);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-
-.section-header{display:flex;align-items:center;gap:12px;margin-bottom:32px}
-.section-header h2{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:700}
-
-.terminal{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:12px;overflow:hidden;
-  box-shadow:0 0 40px -20px rgba(34,211,238,0.2);
-}
-.term-bar{
-  background:#0a1520;padding:10px 14px;
-  display:flex;gap:7px;align-items:center;
-  border-bottom:1px solid var(--border);
-}
-.dot{width:11px;height:11px;border-radius:50%}
-.dot-r{background:#ff5f57}.dot-y{background:#febc2e}.dot-g{background:#28c840}
-.term-body{
-  padding:20px;
-  font-family:'JetBrains Mono',monospace;
-  font-size:13px;line-height:1.9;
-  color:rgba(207,228,255,0.85);
-  min-height:200px;
-}
-.term-prompt{color:var(--primary)}
-.term-highlight{color:rgba(34,211,238,0.75)}
-
-/* ===== PACKAGES ===== */
-.pkg-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:20px;margin-bottom:48px;
-}
-.pkg-card{
-  background:var(--card);border:1px solid var(--border);border-radius:14px;
-  padding:28px;display:flex;flex-direction:column;gap:12px;
-  transition:border-color 0.3s,box-shadow 0.3s,transform 0.3s;
-  position:relative;overflow:hidden;
-}
-.pkg-card::before{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(to bottom,rgba(34,211,238,0.04),transparent);
-  opacity:0;transition:opacity 0.3s;
-}
-.pkg-card:hover::before{opacity:1}
-.pkg-card:hover{border-color:rgba(34,211,238,0.4);box-shadow:0 0 30px -10px var(--primary-glow)}
-
-.pkg-featured{
-  border-color:var(--primary);
-  box-shadow:0 0 40px -10px var(--primary-glow);
-  transform:translateY(-8px);
-}
-.pkg-featured:hover{transform:translateY(-10px)}
-.pkg-featured-bar{
-  position:absolute;top:0;left:0;right:0;height:3px;
-  background:var(--primary);
-}
-
-.badge-rec{
-  display:inline-flex;align-items:center;
-  background:var(--primary);color:#060d14;
-  font-family:'JetBrains Mono',monospace;
-  font-size:10px;font-weight:700;letter-spacing:0.05em;
-  padding:4px 10px;border-radius:6px;
-  animation:pulse 1.8s ease-in-out infinite;
-}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 var(--primary-glow)}50%{box-shadow:0 0 12px 3px var(--primary-glow)}}
-
-.pkg-name{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:17px}
-.pkg-name-featured{color:var(--primary)}
-.pkg-price{font-size:24px;font-weight:700}
-.pkg-desc{color:var(--muted);font-size:14px;line-height:1.6}
-
-/* ===== TABLE ===== */
-.table-wrap{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:12px;overflow:hidden;margin-bottom:20px;
-}
-table{width:100%;border-collapse:collapse}
-thead{background:rgba(255,255,255,0.04)}
-th{
-  font-family:'JetBrains Mono',monospace;
-  font-size:13px;font-weight:700;
-  padding:14px 16px;text-align:center;
-  border-bottom:1px solid var(--border);
-}
-th:first-child{text-align:left}
-th.col-featured{color:var(--primary)}
-td{
-  padding:12px 16px;font-size:13px;text-align:center;
-  border-bottom:1px solid rgba(26,45,66,0.5);
-  color:var(--muted);
-}
-td:first-child{text-align:left;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:12px}
-td.featured-col{color:var(--primary)}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:rgba(34,211,238,0.02)}
-
-.check{color:var(--green);font-size:16px}
-.cross{color:var(--red);font-size:16px}
-
-.table-note{text-align:center;font-size:13px;color:var(--muted);margin-bottom:8px}
-.table-note strong{color:var(--text)}
-.table-subnote{text-align:center;font-size:11px;color:rgba(122,152,181,0.6);margin-bottom:4px}
-
-/* ===== NOTES ===== */
-.notes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-.note-card{
-  background:var(--card);border:1px solid var(--border);
-  border-radius:12px;padding:22px;
-  display:flex;gap:16px;
-}
-.note-icon{width:36px;height:36px;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:20px}
-.note-title{font-weight:700;margin-bottom:6px;font-size:15px}
-.note-body{font-size:13px;color:var(--muted);line-height:1.6}
-
-/* ===== CONTACT ===== */
-.contact-section{
-  padding:96px 0;
-  position:relative;
-}
-.contact-section::before{
-  content:"";position:absolute;inset:0;
-  background:rgba(34,211,238,0.03);
-  pointer-events:none;
-}
-.contact-inner{
-  position:relative;z-index:1;
-  max-width:600px;margin:0 auto;text-align:center;
-}
-.contact-inner h2{
-  font-family:'JetBrains Mono',monospace;font-size:32px;margin-bottom:16px;
-}
-.contact-inner p{color:var(--muted);font-size:16px;margin-bottom:40px;line-height:1.6}
-
-.discord-box{
-  display:inline-flex;align-items:center;gap:12px;
-  background:var(--card);border:1px solid var(--border);
-  border-radius:12px;padding:16px 28px;
-  font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;
-  box-shadow:0 0 28px -12px var(--primary-glow);
-  margin-bottom:12px;
-}
-.discord-icon{color:var(--primary);font-size:20px}
-.copy-btn{
-  background:none;border:none;cursor:pointer;
-  color:var(--muted);padding:4px;
-  border-radius:4px;transition:color 0.2s;font-size:16px;
-}
-.copy-btn:hover{color:var(--primary)}
-.copy-hint{font-size:12px;color:rgba(122,152,181,0.5);font-family:'JetBrains Mono',monospace}
-.copied-msg{color:var(--green);font-size:12px;font-family:'JetBrains Mono',monospace;display:none}
-
-/* ===== PROOFS ===== */
-.proofs-section{
-  padding:96px 0;
-  border-top:1px solid var(--border);
-  background:rgba(255,255,255,0.01);
-}
-.proofs-inner{text-align:center}
-.proofs-inner h2{font-family:'JetBrains Mono',monospace;font-size:30px;margin-bottom:40px}
-.proofs-empty{
-  border:1px dashed var(--border);border-radius:14px;
-  padding:60px 40px;background:rgba(15,27,40,0.4);
-  display:inline-block;min-width:340px;
-}
-.proofs-empty .empty-icon{font-size:36px;opacity:0.25;margin-bottom:16px}
-.proofs-empty p{color:rgba(122,152,181,0.5);font-family:'JetBrains Mono',monospace;font-size:16px}
-.proofs-empty small{color:rgba(122,152,181,0.35);font-size:12px;margin-top:8px;display:block}
-
-/* ===== FOOTER ===== */
-footer{
-  padding:32px 24px;
-  border-top:1px solid var(--border);
-  background:var(--card);
-  text-align:center;
-}
-.footer-inner{
-  max-width:1100px;margin:0 auto;
-  display:flex;flex-direction:column;align-items:center;gap:8px;
-}
-.footer-logo{
-  font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;
-  display:flex;align-items:center;gap:8px;
-}
-.footer-logo span{color:var(--primary)}
-.footer-copy{font-size:12px;color:var(--muted)}
-
-/* ===== RESPONSIVE ===== */
-@media(max-width:640px){
-  .nav-links{display:none}
-  .pkg-featured{transform:none}
-  .pkg-featured:hover{transform:translateY(-4px)}
-}
-</style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NullGate — Roblox Anti-Cheat</title>
+  <link rel="stylesheet" href="style.css"/>
+  <!-- Twemoji for cross-platform custom emojis -->
+  <script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -361,242 +14,260 @@ footer{
 <nav>
   <div class="nav-inner">
     <a class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary)"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
       Null<span>Gate</span>
     </a>
     <ul class="nav-links">
-      <li><a onclick="scroll2('about')">About</a></li>
-      <li><a onclick="scroll2('packages')">Packages</a></li>
-      <li><a onclick="scroll2('proofs')">Proofs</a></li>
-      <li><button class="nav-cta" onclick="scroll2('contact')">Order Now</button></li>
+      <li><a onclick="scrollTo('about')">About</a></li>
+      <li><a onclick="scrollTo('packages')">Packages</a></li>
+      <li><a onclick="scrollTo('proofs')">Proofs</a></li>
+      <li><button class="nav-cta" onclick="scrollTo('contact')">Order Now</button></li>
     </ul>
   </div>
 </nav>
 
 <main>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-icon">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-  </div>
-  <h1 id="hero-title"><span class="cursor"></span></h1>
-  <p id="hero-sub" style="opacity:0"></p>
-  <button class="btn-primary" id="hero-btn" onclick="scroll2('packages')" style="opacity:0">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
-    View Packages
-  </button>
-</section>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-icon">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+    </div>
+    <h1 id="hero-title"><span class="cursor"></span></h1>
+    <p id="hero-sub" style="opacity:0"></p>
+    <button class="btn-primary" id="hero-btn" onclick="scrollTo('packages')" style="opacity:0">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
+      </svg>
+      View Packages
+    </button>
+  </section>
 
-<!-- ABOUT -->
-<section class="section section-alt" id="about">
-  <div class="container">
-    <div class="reveal">
-      <div class="section-header">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
-        <h2>~/about_me.txt</h2>
-      </div>
-      <div class="terminal">
-        <div class="term-bar">
-          <div class="dot dot-r"></div>
-          <div class="dot dot-y"></div>
-          <div class="dot dot-g"></div>
+  <!-- ABOUT -->
+  <section class="section section-alt" id="about">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-header">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
+          </svg>
+          <h2>~/about_me.txt</h2>
         </div>
-        <div class="term-body" id="term-body">
-          <span class="term-prompt">root@nullgate:~$</span> cat about.txt<br><br>
-          <span id="term-text"></span><span class="cursor" id="term-cursor"></span>
+        <div class="terminal">
+          <div class="term-bar">
+            <div class="dot dot-r"></div>
+            <div class="dot dot-y"></div>
+            <div class="dot dot-g"></div>
+          </div>
+          <div class="term-body">
+            <span class="term-prompt">root@nullgate:~$</span> cat about.txt<br><br>
+            <span id="term-text"></span><span class="cursor" id="term-cursor"></span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- PACKAGES -->
-<section class="section" id="packages">
-  <div class="container">
-    <div class="reveal" style="text-align:center;margin-bottom:48px">
-      <h2 style="font-family:'JetBrains Mono',monospace;font-size:32px;margin-bottom:10px">Security Packages</h2>
-      <p style="color:var(--muted)">Select the protection tier that fits your game's scale.</p>
-    </div>
+  <!-- PACKAGES -->
+  <section class="section" id="packages">
+    <div class="container">
 
-    <div class="pkg-grid reveal">
-
-      <!-- Small -->
-      <div class="pkg-card">
-        <div class="pkg-name">Small Anti-Cheat</div>
-        <div class="pkg-price">10 – 20 R$</div>
-        <div class="pkg-desc">For small projects and hobby games. Basic exploit detection, lightweight footprint, easy to integrate. Great starting point.</div>
+      <div class="section-center reveal">
+        <h2>Security Packages</h2>
+        <p>Select the protection tier that fits your game's scale.</p>
       </div>
 
-      <!-- Medium -->
-      <div class="pkg-card pkg-featured">
-        <div class="pkg-featured-bar"></div>
-        <div style="display:flex;justify-content:space-between;align-items:flex-start">
-          <div class="pkg-name pkg-name-featured">Medium Anti-Cheat</div>
-          <span class="badge-rec">⭐ MOST RECOMMENDED</span>
+      <div class="pkg-grid reveal">
+
+        <!-- Small -->
+        <div class="pkg-card">
+          <div class="pkg-name">Small Anti-Cheat</div>
+          <div class="pkg-price">10 – 20 R$</div>
+          <div class="pkg-desc">For small projects and hobby games. Basic exploit detection, lightweight footprint, and easy to integrate. A solid starting point for any project.</div>
         </div>
-        <div class="pkg-price" style="color:var(--primary)">20 – 45 R$</div>
-        <div class="pkg-desc">For growing games with moderate player counts. Covers most common exploits, speed hacks, and teleport abuse. Best balance of protection and performance.</div>
+
+        <!-- Medium (featured) -->
+        <div class="pkg-card pkg-featured">
+          <div class="pkg-top-bar"></div>
+          <div class="pkg-head">
+            <div class="pkg-name pkg-name-featured">Medium Anti-Cheat</div>
+            <span class="badge-rec">⭐ MOST RECOMMENDED</span>
+          </div>
+          <div class="pkg-price pkg-price-featured">20 – 45 R$</div>
+          <div class="pkg-desc">For growing games with moderate player counts. Covers most common exploits, speed hacks, and teleport abuse. Best balance of protection and performance.</div>
+        </div>
+
+        <!-- High-End -->
+        <div class="pkg-card">
+          <div class="pkg-name">High-End Anti-Cheat</div>
+          <div class="pkg-price">45 – 100 R$</div>
+          <div class="pkg-desc">For large games requiring maximum security. Enhanced detection layers, lower false-positive rate, and significantly reduced vulnerability compared to lower tiers.</div>
+        </div>
+
       </div>
 
-      <!-- High-End -->
-      <div class="pkg-card">
-        <div class="pkg-name">High-End Anti-Cheat</div>
-        <div class="pkg-price">45 – 100 R$</div>
-        <div class="pkg-desc">For large games requiring maximum security. Enhanced detection layers, lower false-positive rate, and reduced vulnerability compared to lower tiers.</div>
+      <!-- Comparison Table -->
+      <div class="reveal">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Feature</th>
+                <th>Small</th>
+                <th class="col-featured">Medium</th>
+                <th>High-End</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Price Range</td>
+                <td>10–20 R$</td>
+                <td class="fcol">20–45 R$</td>
+                <td>45–100 R$</td>
+              </tr>
+              <tr>
+                <td>Exploit Detection</td>
+                <td>Basic</td>
+                <td class="fcol">Advanced</td>
+                <td>Advanced+</td>
+              </tr>
+              <tr>
+                <td>Speed Hack Detection</td>
+                <td><span class="check-icon">✔</span></td>
+                <td class="fcol"><span class="check-icon">✔</span></td>
+                <td><span class="check-icon">✔</span></td>
+              </tr>
+              <tr>
+                <td>Teleport Abuse Detection</td>
+                <td><span class="cross-icon">✘</span></td>
+                <td class="fcol"><span class="check-icon">✔</span></td>
+                <td><span class="check-icon">✔</span></td>
+              </tr>
+              <tr>
+                <td>Fly / Noclip Detection</td>
+                <td><span class="cross-icon">✘</span></td>
+                <td class="fcol"><span class="check-icon">✔</span></td>
+                <td><span class="check-icon">✔</span></td>
+              </tr>
+              <tr>
+                <td>False-Ban Unban Tool</td>
+                <td><span class="check-icon">✔</span></td>
+                <td class="fcol"><span class="check-icon">✔</span></td>
+                <td><span class="check-icon">✔</span></td>
+              </tr>
+              <tr>
+                <td>Server Size Suitability</td>
+                <td>Small</td>
+                <td class="fcol">Medium</td>
+                <td>Large</td>
+              </tr>
+              <tr>
+                <td>Security Vulnerability</td>
+                <td>Standard</td>
+                <td class="fcol">Reduced</td>
+                <td>Minimal</td>
+              </tr>
+              <tr>
+                <td>Best For</td>
+                <td>Hobby projects</td>
+                <td class="fcol">Most games</td>
+                <td>Serious titles</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-notes">
+          <p class="table-note-main">Extra modules to any package cost <strong>5 Robux per module</strong></p>
+          <p class="table-note-sub">Modules are optional — the anti-cheat works fine without them, but they improve detection speed and performance.</p>
+          <p class="table-note-sub">All prices are in <strong style="color:rgba(220,233,245,0.6)">Robux</strong> — Roblox's in-game currency, not real money.</p>
+        </div>
       </div>
 
     </div>
+  </section>
 
-    <!-- Table -->
-    <div class="reveal">
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Feature</th>
-              <th>Small</th>
-              <th class="col-featured">Medium</th>
-              <th>High-End</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Price Range</td>
-              <td>10–20 R$</td>
-              <td class="featured-col">20–45 R$</td>
-              <td>45–100 R$</td>
-            </tr>
-            <tr>
-              <td>Exploit Detection</td>
-              <td>Basic</td>
-              <td class="featured-col">Advanced</td>
-              <td>Advanced+</td>
-            </tr>
-            <tr>
-              <td>Speed Hack Detection</td>
-              <td><span class="check">✓</span></td>
-              <td class="featured-col"><span class="check">✓</span></td>
-              <td><span class="check">✓</span></td>
-            </tr>
-            <tr>
-              <td>Teleport Abuse Detection</td>
-              <td><span class="cross">✗</span></td>
-              <td class="featured-col"><span class="check">✓</span></td>
-              <td><span class="check">✓</span></td>
-            </tr>
-            <tr>
-              <td>Fly / Noclip Detection</td>
-              <td><span class="cross">✗</span></td>
-              <td class="featured-col"><span class="check">✓</span></td>
-              <td><span class="check">✓</span></td>
-            </tr>
-            <tr>
-              <td>False-Ban Unban Tool</td>
-              <td><span class="check">✓</span></td>
-              <td class="featured-col"><span class="check">✓</span></td>
-              <td><span class="check">✓</span></td>
-            </tr>
-            <tr>
-              <td>Server Size Suitability</td>
-              <td>Small</td>
-              <td class="featured-col">Medium</td>
-              <td>Large</td>
-            </tr>
-            <tr>
-              <td>Security Vulnerability</td>
-              <td>Standard</td>
-              <td class="featured-col">Reduced</td>
-              <td>Minimal</td>
-            </tr>
-            <tr>
-              <td>Best For</td>
-              <td>Hobby projects</td>
-              <td class="featured-col">Most games</td>
-              <td>Serious titles</td>
-            </tr>
-          </tbody>
-        </table>
+  <!-- IMPORTANT NOTES -->
+  <section class="section section-alt">
+    <div class="container">
+      <div class="notes-grid reveal">
+
+        <div class="note-card">
+          <div class="note-emoji">🛡️</div>
+          <div>
+            <div class="note-title">Accountability</div>
+            <div class="note-body">We take full responsibility if someone is falsely banned. Every script includes a built-in unban tool to fix it fast.</div>
+          </div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-emoji">⚠️</div>
+          <div>
+            <div class="note-title">Refund Policy</div>
+            <div class="note-body">No refunds after purchase — unless the anti-cheat is completely broken on delivery.</div>
+          </div>
+        </div>
+
+        <div class="note-card">
+          <div class="note-emoji">ℹ️</div>
+          <div>
+            <div class="note-title">Expectations</div>
+            <div class="note-body">These anti-cheats cannot stop every hacker, but they will stop most. Choose the best package for your game's scale.</div>
+          </div>
+        </div>
+
       </div>
-      <p class="table-note">Extra modules to any of these packages cost <strong>5 Robux per module</strong></p>
-      <p class="table-subnote">Extra modules are optional — the anti-cheat works fine without them, but they improve performance and detection speed.</p>
-      <p class="table-subnote" style="margin-top:4px">All prices are in <strong style="color:rgba(122,152,181,0.7)">Robux</strong> — Roblox's in-game currency, not real money.</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- NOTES -->
-<section class="section section-alt">
-  <div class="container">
-    <div class="notes-grid reveal">
-
-      <div class="note-card">
-        <div class="note-icon">🛡️</div>
+  <!-- CONTACT -->
+  <section class="contact-section" id="contact">
+    <div class="container">
+      <div class="contact-inner reveal">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:24px">
+          <polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/>
+        </svg>
+        <h2>Ready to Protect Your Game?</h2>
+        <p>Send me a DM on Discord — tell me your game, expected server size, and any extra info. I'll recommend the best package for you.</p>
         <div>
-          <div class="note-title">Accountability</div>
-          <div class="note-body">We take full responsibility if someone is falsely banned. Every script includes a built-in unban tool.</div>
+          <div class="discord-box">
+            <span class="discord-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </span>
+            <span>version11111.</span>
+            <button class="copy-btn" onclick="copyDiscord()" title="Copy username">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+            </button>
+          </div>
+          <div><span class="copy-hint" id="copy-hint">Discord username — click the icon to copy</span></div>
+          <div class="copied-msg" id="copied-msg">✔ Copied to clipboard!</div>
         </div>
-      </div>
-
-      <div class="note-card">
-        <div class="note-icon">⚠️</div>
-        <div>
-          <div class="note-title">Refund Policy</div>
-          <div class="note-body">No refunds after purchase — unless the anti-cheat is completely broken on delivery.</div>
-        </div>
-      </div>
-
-      <div class="note-card">
-        <div class="note-icon">ℹ️</div>
-        <div>
-          <div class="note-title">Expectations</div>
-          <div class="note-body">These anti-cheats cannot stop every hacker, but they will stop most. Choose the best package for your game.</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="contact-section" id="contact">
-  <div class="container">
-    <div class="contact-inner reveal">
-      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:24px"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
-      <h2>Ready to Protect Your Game?</h2>
-      <p>Send me a DM on Discord and tell me: your game, expected average server size, and any extra info. I'll recommend the best package for you.</p>
-      <div>
-        <div class="discord-box">
-          <span class="discord-icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          </span>
-          <span>version11111.</span>
-          <button class="copy-btn" onclick="copyDiscord()" title="Copy username" id="copy-btn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="copy-icon"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          </button>
-        </div>
-        <div><span class="copy-hint">Discord username — click the icon to copy</span></div>
-        <div class="copied-msg" id="copied-msg">✓ Copied to clipboard!</div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- PROOFS -->
-<section class="proofs-section" id="proofs">
-  <div class="container">
-    <div class="proofs-inner reveal">
-      <h2>Proofs</h2>
-      <div class="proofs-empty">
-        <div class="empty-icon">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.3"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+  <!-- PROOFS -->
+  <section class="proofs-section" id="proofs">
+    <div class="container">
+      <div class="proofs-inner reveal">
+        <h2>Proofs</h2>
+        <div class="proofs-empty">
+          <div class="empty-icon">📂</div>
+          <p>Nothing here yet!</p>
+          <small>Check back later for demonstrations and vouches.</small>
         </div>
-        <p>Nothing here yet!</p>
-        <small>Check back later for demonstrations and vouches.</small>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
 </main>
 
@@ -604,7 +275,9 @@ footer{
 <footer>
   <div class="footer-inner">
     <div class="footer-logo">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
       Null<span>Gate</span>
     </div>
     <div class="footer-copy">Roblox Anti-Cheat, Done Right.</div>
@@ -612,93 +285,11 @@ footer{
   </div>
 </footer>
 
+<script src="script.js"></script>
 <script>
-/* ===== HERO TYPING ===== */
-const heroTitle = "Roblox Anti-Cheat, Done Right.";
-const heroSub = "Affordable, effective anti-cheat for your Roblox game. Over a year of Luau experience protecting growing communities.";
-
-let ti = 0;
-const titleEl = document.getElementById("hero-title");
-const cursorEl = titleEl.querySelector(".cursor");
-
-function typeTitle() {
-  if (ti < heroTitle.length) {
-    titleEl.insertBefore(document.createTextNode(heroTitle[ti++]), cursorEl);
-    setTimeout(typeTitle, 55);
-  } else {
-    setTimeout(() => {
-      const subEl = document.getElementById("hero-sub");
-      subEl.style.transition = "opacity 0.8s ease";
-      subEl.style.opacity = "1";
-      subEl.textContent = heroSub;
-      setTimeout(() => {
-        const btn = document.getElementById("hero-btn");
-        btn.style.transition = "opacity 0.6s ease";
-        btn.style.opacity = "1";
-      }, 600);
-    }, 200);
-  }
-}
-setTimeout(typeTitle, 300);
-
-/* ===== TERMINAL TYPE ===== */
-const termLines = [
-  "Hello! Looking for an anti cheat for your game? And for a low price?",
-  "Well you've found the right person!",
-  "",
-  "I do low rates because I genuinely want people to have a better time",
-  "developing and not worry about cheaters ruining their community.",
-  "",
-  "These anti cheats won't stop ALL types of hackers, but they will",
-  "stop most of the common threats that plague everyday games.",
-  "",
-  "I have over a year of dedicated experience in Luau, focusing",
-  "specifically on exploit detection and game security architecture.",
-  "",
-  "version11111. — DM me on Discord.",
-];
-const termText = termLines.join("\n");
-let ki = 0;
-const termEl = document.getElementById("term-text");
-const termCursor = document.getElementById("term-cursor");
-
-function typeTerm() {
-  if (ki < termText.length) {
-    if (termText[ki] === "\n") {
-      termEl.appendChild(document.createElement("br"));
-    } else {
-      termEl.appendChild(document.createTextNode(termText[ki]));
-    }
-    ki++;
-    setTimeout(typeTerm, 10);
-  } else {
-    termCursor.style.display = "none";
-  }
-}
-setTimeout(typeTerm, 1600);
-
-/* ===== SCROLL REVEAL ===== */
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add("active"); });
-}, { threshold: 0.12 });
-document.querySelectorAll(".reveal").forEach(el => obs.observe(el));
-
-/* ===== NAV SMOOTH SCROLL ===== */
-function scroll2(id) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: "smooth" });
-}
-
-/* ===== COPY DISCORD ===== */
-function copyDiscord() {
-  navigator.clipboard.writeText("version11111.").then(() => {
-    const msg = document.getElementById("copied-msg");
-    const hint = document.querySelector(".copy-hint");
-    msg.style.display = "block";
-    hint.style.display = "none";
-    setTimeout(() => { msg.style.display = "none"; hint.style.display = ""; }, 2200);
-  });
-}
+  /* Render all emojis as Twemoji */
+  twemoji.parse(document.body, { folder: 'svg', ext: '.svg' });
 </script>
+
 </body>
 </html>
