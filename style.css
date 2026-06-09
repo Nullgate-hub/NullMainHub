@@ -197,9 +197,8 @@ main{position:relative;z-index:1;padding-top:60px}
   font-family:'JetBrains Mono',monospace;
   font-size:10px;font-weight:700;letter-spacing:0.04em;
   padding:4px 9px;border-radius:6px;white-space:nowrap;flex-shrink:0;
-  animation:pulse-badge 1.8s ease-in-out infinite;
+  box-shadow:0 0 10px 2px var(--primary-glow);
 }
-@keyframes pulse-badge{0%,100%{box-shadow:0 0 0 0 var(--primary-glow)}50%{box-shadow:0 0 10px 3px var(--primary-glow)}}
 .pkg-name{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:16px}
 .pkg-name-featured{color:var(--primary)}
 .pkg-price{font-size:26px;font-weight:700}
