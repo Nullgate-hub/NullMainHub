@@ -269,15 +269,37 @@ main{position:relative;z-index:1;padding-top:60px}
 /* ===== PROOFS ===== */
 .proofs{padding:88px 0;border-top:1px solid var(--border);background:rgba(255,255,255,.01)}
 .proofs-in{text-align:center}
-.proofs-in h2{font-family:'JetBrains Mono',monospace;font-size:28px;margin-bottom:36px}
-.proofs-empty{
-  border:1px dashed var(--border);border-radius:13px;
-  padding:56px 36px;background:rgba(15,27,40,.4);
-  display:inline-block;min-width:280px;
+.proofs-in h2{font-family:'JetBrains Mono',monospace;font-size:28px;margin-bottom:10px}
+.proofs-sub{color:var(--muted);font-size:15px;margin-bottom:36px}
+.proofs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:left}
+.proof-card{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  overflow:hidden;display:flex;flex-direction:column;
+  transition:border-color .25s,box-shadow .25s;
 }
-.picon{margin-bottom:16px;display:flex;justify-content:center;opacity:.25}
-.proofs-empty p{color:rgba(122,152,181,.45);font-family:'JetBrains Mono',monospace;font-size:15px}
-.proofs-empty small{color:rgba(122,152,181,.28);font-size:12px;margin-top:7px;display:block}
+.proof-card:hover{border-color:rgba(34,211,238,.3);box-shadow:0 0 22px -10px var(--primary-glow)}
+.proof-img-wrap{
+  width:100%;overflow:hidden;background:#0a1520;
+  border-bottom:1px solid var(--border);cursor:zoom-in;
+}
+.proof-img-wrap img{
+  width:100%;height:200px;object-fit:cover;object-position:top;
+  display:block;transition:transform .35s ease;
+}
+.proof-card:hover .proof-img-wrap img{transform:scale(1.04)}
+.proof-caption{
+  display:flex;align-items:flex-start;gap:7px;
+  padding:12px 14px;font-size:12px;color:var(--muted);line-height:1.5;
+}
+.proof-caption svg{flex-shrink:0;margin-top:1px}
+
+/* Lightbox */
+.lb{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.88);
+  align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+.lb.show{display:flex}
+.lb img{max-width:90vw;max-height:88vh;border-radius:8px;box-shadow:0 0 60px rgba(0,0,0,.6)}
+.lb-close{position:absolute;top:18px;right:22px;background:none;border:none;cursor:pointer;
+  color:rgba(255,255,255,.6);font-size:28px;line-height:1;padding:4px}
 
 /* ===== FOOTER ===== */
 footer{padding:28px 22px;border-top:1px solid var(--border);background:var(--card)}
@@ -417,6 +439,10 @@ footer{padding:28px 22px;border-top:1px solid var(--border);background:var(--car
   .sol-grid{grid-template-columns:1fr}
   .stats-row{grid-template-columns:repeat(2,1fr)}
   .stat-num{font-size:28px}
+  .proofs-grid{grid-template-columns:1fr}
+}
+@media(max-width:900px){
+  .proofs-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -1038,18 +1064,51 @@ footer{padding:28px 22px;border-top:1px solid var(--border);background:var(--car
   <div class="wrap">
     <div class="proofs-in reveal">
       <h2>Proofs</h2>
-      <div class="proofs-empty">
-        <div class="picon">
-          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+      <p class="proofs-sub">Scripts that are organized and actually work.</p>
+      <div class="proofs-grid">
+
+        <div class="proof-card">
+          <div class="proof-img-wrap">
+            <img src="proof3.png" alt="AntiCheat module tree — organized script structure" loading="lazy"/>
+          </div>
+          <div class="proof-caption">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            Clean module tree — BehaviorAnalysis, RiskEngine, TrustEngine &amp; more
+          </div>
         </div>
-        <p>Nothing here yet!</p>
-        <small>Check back later for demonstrations and vouches.</small>
+
+        <div class="proof-card">
+          <div class="proof-img-wrap">
+            <img src="proof2.png" alt="TestHarness script — full anti-cheat system code" loading="lazy"/>
+          </div>
+          <div class="proof-caption">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+            TestHarness script covering movement, remote &amp; trust engine detection
+          </div>
+        </div>
+
+        <div class="proof-card">
+          <div class="proof-img-wrap">
+            <img src="proof1.png" alt="Test results — 46 tests, 0 failed" loading="lazy"/>
+          </div>
+          <div class="proof-caption">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            46 / 46 tests passed — 0 failures
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
 </section>
 
 </main>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" onclick="closeLb()">
+  <button class="lb-close" onclick="closeLb()">&#x2715;</button>
+  <img id="lb-img" src="" alt=""/>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -1136,6 +1195,26 @@ function copyIt() {
     setTimeout(() => { ok.style.display = "none"; hint.style.display = ""; }, 2200);
   });
 }
+
+/* LIGHTBOX */
+function openLb(src, alt) {
+  const lb = document.getElementById("lb");
+  const img = document.getElementById("lb-img");
+  img.src = src; img.alt = alt;
+  lb.classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+function closeLb() {
+  document.getElementById("lb").classList.remove("show");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeLb(); });
+document.querySelectorAll(".proof-img-wrap").forEach(wrap => {
+  wrap.addEventListener("click", () => {
+    const img = wrap.querySelector("img");
+    openLb(img.src, img.alt);
+  });
+});
 
 /* STAT COUNT-UP */
 const statObs = new IntersectionObserver(entries => {
