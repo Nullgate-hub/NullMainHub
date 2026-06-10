@@ -286,12 +286,125 @@ footer{padding:28px 22px;border-top:1px solid var(--border);background:var(--car
 .flogo em{color:var(--primary);font-style:normal}
 .fcopy{font-size:12px;color:var(--muted)}
 
+/* ===== SECURITY SOLUTIONS OVERVIEW ===== */
+.sol-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+.sol-card{
+  background:var(--card);border:1px solid var(--border);border-radius:11px;
+  padding:18px 16px;display:flex;align-items:center;gap:12px;
+  cursor:pointer;transition:border-color .25s,background .25s,transform .2s;
+  text-decoration:none;color:inherit;
+}
+.sol-card:hover{border-color:rgba(34,211,238,.35);background:rgba(34,211,238,.04);transform:translateY(-2px)}
+.sol-card-icon{
+  flex-shrink:0;width:36px;height:36px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+}
+.sol-card-label{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;line-height:1.3}
+.sol-card-sub{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* ===== STATS ===== */
+.stats-row{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+}
+.stat{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:26px 20px;text-align:center;
+  transition:border-color .3s,box-shadow .3s;
+}
+.stat:hover{border-color:rgba(34,211,238,.3);box-shadow:0 0 20px -10px var(--primary-glow)}
+.stat-num{
+  font-family:'JetBrains Mono',monospace;font-size:36px;font-weight:700;
+  color:var(--primary);line-height:1;margin-bottom:8px;
+}
+.stat-label{font-size:13px;color:var(--muted);line-height:1.4}
+
+/* ===== WHY NULLGATE ===== */
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.why-item{
+  background:var(--card);border:1px solid var(--border);border-radius:11px;
+  padding:18px 20px;display:flex;align-items:flex-start;gap:12px;
+  transition:border-color .25s;
+}
+.why-item:hover{border-color:rgba(34,211,238,.3)}
+.why-check{
+  flex-shrink:0;width:26px;height:26px;border-radius:7px;
+  background:rgba(52,211,153,.12);color:var(--green);
+  display:flex;align-items:center;justify-content:center;margin-top:1px;
+}
+.why-title{font-weight:700;font-size:14px;margin-bottom:4px}
+.why-body{font-size:13px;color:var(--muted);line-height:1.55}
+
+/* ===== SERVICES ACCORDION ===== */
+.svc-intro{color:var(--muted);margin-bottom:36px;font-size:15px;line-height:1.65}
+.acc{display:flex;flex-direction:column;gap:10px;margin-bottom:44px}
+.acc-item{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .25s}
+.acc-item.open{border-color:rgba(34,211,238,.3)}
+.acc-hd{
+  width:100%;background:none;border:none;cursor:pointer;
+  display:flex;align-items:center;gap:13px;
+  padding:18px 22px;text-align:left;
+  transition:background .2s;
+}
+.acc-hd:hover{background:rgba(34,211,238,.04)}
+.acc-icon{
+  flex-shrink:0;width:38px;height:38px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+}
+.ai-lock  {background:rgba(34,211,238,.12);color:var(--primary)}
+.ai-coin  {background:rgba(251,191,36,.1); color:#fbbf24}
+.ai-bag   {background:rgba(52,211,153,.12);color:var(--green)}
+.ai-trade {background:rgba(167,139,250,.12);color:#a78bfa}
+.ai-data  {background:rgba(56,189,248,.12); color:#38bdf8}
+.ai-sword {background:rgba(248,113,113,.1); color:#f87171}
+.ai-gear  {background:rgba(251,146,60,.1);  color:#fb923c}
+.ai-mag   {background:rgba(34,211,238,.12); color:var(--primary)}
+.ai-flask {background:rgba(52,211,153,.12); color:var(--green)}
+.acc-title{flex:1;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px;color:var(--text)}
+.acc-arr{
+  flex-shrink:0;color:var(--muted);transition:transform .3s;
+  display:flex;align-items:center;
+}
+.acc-item.open .acc-arr{transform:rotate(180deg)}
+.acc-body{
+  max-height:0;overflow:hidden;
+  transition:max-height .35s ease,padding .35s ease;
+  padding:0 22px;
+}
+.acc-item.open .acc-body{max-height:1000px;padding:0 22px 22px}
+.svc-tiers{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:2px}
+.svc-tier{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:16px}
+.svc-tier-name{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;margin-bottom:6px;color:var(--text)}
+.svc-price{font-size:18px;font-weight:700;color:var(--primary);margin-bottom:10px}
+.svc-price small{font-size:12px;color:var(--muted);font-weight:400}
+.svc-feats{list-style:none;display:flex;flex-direction:column;gap:5px}
+.svc-feats li{font-size:12px;color:var(--muted);display:flex;align-items:flex-start;gap:6px;line-height:1.45}
+.svc-feats li::before{content:"";display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--primary);flex-shrink:0;margin-top:5px}
+.svc-note{font-size:12px;color:var(--muted);margin-top:14px;padding-top:14px;border-top:1px solid var(--border);line-height:1.55}
+.svc-note strong{color:var(--text)}
+
+/* Extras */
+.extras-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.extra-pill{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--card);border:1px solid var(--border);border-radius:8px;
+  padding:9px 14px;font-size:13px;
+}
+.extra-pill-price{font-family:'JetBrains Mono',monospace;color:var(--primary);font-weight:700;font-size:13px}
+
 /* ===== RESPONSIVE ===== */
 @media(max-width:900px){
   .pkg-grid{grid-template-columns:1fr}
   .notes-grid{grid-template-columns:1fr}
   .pkg-featured{transform:none}
   .pkg-featured:hover{transform:translateY(-4px)}
+  .sol-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .why-grid{grid-template-columns:1fr}
+  .why-item[style]{grid-column:unset!important}
 }
 @media(max-width:640px){
   .nav-links{display:none}
@@ -301,6 +414,9 @@ footer{padding:28px 22px;border-top:1px solid var(--border);background:var(--car
   .dbox{font-size:14px;padding:13px 18px}
   .wrap{padding:0 16px}
   nav{padding:0 16px}
+  .sol-grid{grid-template-columns:1fr}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .stat-num{font-size:28px}
 }
 </style>
 </head>
@@ -316,6 +432,7 @@ footer{padding:28px 22px;border-top:1px solid var(--border);background:var(--car
     <ul class="nav-links">
       <li><a onclick="go('about')">About</a></li>
       <li><a onclick="go('packages')">Packages</a></li>
+      <li><a onclick="go('services')">Services</a></li>
       <li><a onclick="go('proofs')">Proofs</a></li>
       <li><button class="nav-btn" onclick="go('contact')">Order Now</button></li>
     </ul>
@@ -337,6 +454,64 @@ footer{padding:28px 22px;border-top:1px solid var(--border);background:var(--car
   </button>
 </section>
 
+<!-- SECURITY SOLUTIONS -->
+<section class="section" id="solutions">
+  <div class="wrap">
+    <div class="sec-center reveal">
+      <h2>Security Solutions</h2>
+      <p>End-to-end Roblox game security — from anti-cheat to full system hardening.</p>
+    </div>
+    <div class="sol-grid reveal">
+
+      <a class="sol-card" onclick="go('packages')">
+        <span class="sol-card-icon ai-lock"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+        <div><div class="sol-card-label">Anti-Cheat Development</div><div class="sol-card-sub">Speed, fly, teleport &amp; more</div></div>
+      </a>
+
+      <a class="sol-card" onclick="go('services')">
+        <span class="sol-card-icon ai-lock"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+        <div><div class="sol-card-label">Remote Security</div><div class="sol-card-sub">Validation, rate limits &amp; honeypots</div></div>
+      </a>
+
+      <a class="sol-card" onclick="go('services')">
+        <span class="sol-card-icon ai-coin"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>
+        <div><div class="sol-card-label">Economy Security</div><div class="sol-card-sub">Dupe prevention &amp; auditing</div></div>
+      </a>
+
+      <a class="sol-card" onclick="go('services')">
+        <span class="sol-card-icon ai-bag"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span>
+        <div><div class="sol-card-label">Inventory Security</div><div class="sol-card-sub">Item protection &amp; validation</div></div>
+      </a>
+
+      <a class="sol-card" onclick="go('services')">
+        <span class="sol-card-icon ai-trade"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></span>
+        <div><div class="sol-card-label">Trading Security</div><div class="sol-card-sub">Scam prevention &amp; validation</div></div>
+      </a>
+
+      <a class="sol-card" onclick="go('services')">
+        <span class="sol-card-icon ai-data"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></span>
+        <div><div class="sol-card-label">Data Security</div><div class="sol-card-sub">Backups, validation &amp; tamper detection</div></div>
+      </a>
+
+      <a class="sol-card" onclick="go('services')">
+        <span class="sol-card-icon ai-sword"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"/><path d="M13 19l6-6"/><path d="M2 2l20 20"/><path d="M3 21l3-3"/></svg></span>
+        <div><div class="sol-card-label">Combat Security</div><div class="sol-card-sub">Hit validation &amp; aimbot detection</div></div>
+      </a>
+
+      <a class="sol-card" onclick="go('services')">
+        <span class="sol-card-icon ai-mag"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+        <div><div class="sol-card-label">Security Audits</div><div class="sol-card-sub">Full codebase review &amp; report</div></div>
+      </a>
+
+      <a class="sol-card" onclick="go('services')">
+        <span class="sol-card-icon ai-flask"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M6 21h12"/><path d="M10 3v9l-3.5 9"/><path d="M14 3v9l3.5 9"/></svg></span>
+        <div><div class="sol-card-label">Security Testing</div><div class="sol-card-sub">Penetration testing &amp; findings</div></div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
 <!-- ABOUT -->
 <section class="section section-alt" id="about">
   <div class="wrap">
@@ -356,8 +531,32 @@ footer{padding:28px 22px;border-top:1px solid var(--border);background:var(--car
   </div>
 </section>
 
+<!-- STATS -->
+<section class="section" id="stats">
+  <div class="wrap">
+    <div class="stats-row reveal">
+      <div class="stat">
+        <div class="stat-num" data-target="20" data-suffix="+">0</div>
+        <div class="stat-label">Detection Systems</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" data-target="50" data-suffix="+">0</div>
+        <div class="stat-label">Security Tests Passed</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" data-target="0.2" data-suffix="ms" data-decimal="1">0</div>
+        <div class="stat-label">Avg Server Impact</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num" data-target="100" data-suffix="%">0</div>
+        <div class="stat-label">Server-Side Validation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- PACKAGES -->
-<section class="section" id="packages">
+<section class="section section-alt" id="packages">
   <div class="wrap">
 
     <div class="sec-center reveal">
@@ -467,6 +666,254 @@ footer{padding:28px 22px;border-top:1px solid var(--border);background:var(--car
   </div>
 </section>
 
+<!-- SERVICES -->
+<section class="section section-alt" id="services">
+  <div class="wrap">
+    <div class="sec-center reveal">
+      <h2>Additional Services</h2>
+      <p class="svc-intro">Beyond anti-cheat packages — standalone security services for every part of your game.<br>Click any category to expand its tiers.</p>
+    </div>
+
+    <div class="acc reveal">
+
+      <!-- Remote Security -->
+      <div class="acc-item">
+        <button class="acc-hd" onclick="toggleAcc(this)">
+          <span class="acc-icon ai-lock"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+          <span class="acc-title">Remote Security</span>
+          <span class="acc-arr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="acc-body">
+          <div class="svc-tiers">
+            <div class="svc-tier">
+              <div class="svc-tier-name">Remote Audit</div>
+              <div class="svc-price">25 <small>Robux</small></div>
+              <ul class="svc-feats"><li>Review existing remotes</li><li>Security recommendations</li></ul>
+            </div>
+            <div class="svc-tier">
+              <div class="svc-tier-name">Remote Hardening</div>
+              <div class="svc-price">75 <small>Robux</small></div>
+              <ul class="svc-feats"><li>Add validation</li><li>Add rate limits</li><li>Improve security</li></ul>
+            </div>
+            <div class="svc-tier">
+              <div class="svc-tier-name">Full Remote Security</div>
+              <div class="svc-price">150 <small>Robux</small></div>
+              <ul class="svc-feats"><li>Audit</li><li>Validation</li><li>Rate limiting</li><li>Honeypots</li><li>Logging</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Economy Security -->
+      <div class="acc-item">
+        <button class="acc-hd" onclick="toggleAcc(this)">
+          <span class="acc-icon ai-coin"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></span>
+          <span class="acc-title">Economy Security</span>
+          <span class="acc-arr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="acc-body">
+          <div class="svc-tiers">
+            <div class="svc-tier">
+              <div class="svc-tier-name">Basic Economy Protection</div>
+              <div class="svc-price">50 <small>Robux</small></div>
+              <ul class="svc-feats"><li>Prevent common economy exploits</li><li>Basic transaction validation</li></ul>
+            </div>
+            <div class="svc-tier">
+              <div class="svc-tier-name">Full Economy Security</div>
+              <div class="svc-price">100 <small>Robux</small></div>
+              <ul class="svc-feats"><li>Full transaction auditing</li><li>Dupe prevention</li><li>Rate limiting on economy actions</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inventory Security -->
+      <div class="acc-item">
+        <button class="acc-hd" onclick="toggleAcc(this)">
+          <span class="acc-icon ai-bag"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span>
+          <span class="acc-title">Inventory Security</span>
+          <span class="acc-arr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="acc-body">
+          <div class="svc-tiers">
+            <div class="svc-tier">
+              <div class="svc-tier-name">Inventory Audit</div>
+              <div class="svc-price">25 <small>Robux</small></div>
+              <ul class="svc-feats"><li>Review inventory system</li><li>Identify vulnerabilities</li></ul>
+            </div>
+            <div class="svc-tier">
+              <div class="svc-tier-name">Inventory Protection</div>
+              <div class="svc-price">75 <small>Robux</small></div>
+              <ul class="svc-feats"><li>Item dupe prevention</li><li>Validation on all inventory actions</li><li>Logging</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trading Security -->
+      <div class="acc-item">
+        <button class="acc-hd" onclick="toggleAcc(this)">
+          <span class="acc-icon ai-trade"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></span>
+          <span class="acc-title">Trading Security</span>
+          <span class="acc-arr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="acc-body">
+          <div class="svc-tiers">
+            <div class="svc-tier">
+              <div class="svc-tier-name">Trade Validation</div>
+              <div class="svc-price">50 <small>Robux</small></div>
+              <ul class="svc-feats"><li>Validate trade requests server-side</li><li>Prevent trade manipulation</li></ul>
+            </div>
+            <div class="svc-tier">
+              <div class="svc-tier-name">Advanced Trading Security</div>
+              <div class="svc-price">100 <small>Robux</small></div>
+              <ul class="svc-feats"><li>Full trade auditing</li><li>Scam prevention logic</li><li>Rate limiting &amp; logging</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data Security -->
+      <div class="acc-item">
+        <button class="acc-hd" onclick="toggleAcc(this)">
+          <span class="acc-icon ai-data"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></span>
+          <span class="acc-title">Data Security</span>
+          <span class="acc-arr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="acc-body">
+          <div class="svc-tiers">
+            <div class="svc-tier">
+              <div class="svc-tier-name">Data Audit</div>
+              <div class="svc-price">25 <small>Robux</small></div>
+              <ul class="svc-feats"><li>Review DataStore usage</li><li>Identify risks &amp; recommendations</li></ul>
+            </div>
+            <div class="svc-tier">
+              <div class="svc-tier-name">Backup + Validation</div>
+              <div class="svc-price">75 <small>Robux</small></div>
+              <ul class="svc-feats"><li>Automated backup system</li><li>Data integrity validation</li></ul>
+            </div>
+            <div class="svc-tier">
+              <div class="svc-tier-name">Complete Data Security</div>
+              <div class="svc-price">125 <small>Robux</small></div>
+              <ul class="svc-feats"><li>Full audit</li><li>Backup system</li><li>Validation &amp; sanitisation</li><li>Tamper detection</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Combat Security -->
+      <div class="acc-item">
+        <button class="acc-hd" onclick="toggleAcc(this)">
+          <span class="acc-icon ai-sword"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"/><path d="M13 19l6-6"/><path d="M2 2l20 20"/><path d="M3 21l3-3"/></svg></span>
+          <span class="acc-title">Combat Security</span>
+          <span class="acc-arr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="acc-body">
+          <div class="svc-tiers">
+            <div class="svc-tier">
+              <div class="svc-tier-name">Basic Combat Validation</div>
+              <div class="svc-price">75 <small>Robux</small></div>
+              <ul class="svc-feats"><li>Server-side hit validation</li><li>Damage sanity checks</li></ul>
+            </div>
+            <div class="svc-tier">
+              <div class="svc-tier-name">Advanced Combat Security</div>
+              <div class="svc-price">150 <small>Robux</small></div>
+              <ul class="svc-feats"><li>Full server-authoritative combat</li><li>Aimbot &amp; reach detection</li><li>Rate limiting on attacks</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Custom System Security -->
+      <div class="acc-item">
+        <button class="acc-hd" onclick="toggleAcc(this)">
+          <span class="acc-icon ai-gear"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+          <span class="acc-title">Custom System Security</span>
+          <span class="acc-arr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="acc-body">
+          <div class="svc-tiers">
+            <div class="svc-tier" style="grid-column:1/-1">
+              <div class="svc-tier-name">Per Protected System</div>
+              <div class="svc-price">+25 <small>Robux / system</small></div>
+              <ul class="svc-feats"><li>Vehicles</li><li>Pets</li><li>Quests</li><li>Simulators</li><li>Tycoons</li></ul>
+              <div class="svc-note">Each unique system type counts as one. DM me with your system details for an accurate quote.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Security Audit -->
+      <div class="acc-item">
+        <button class="acc-hd" onclick="toggleAcc(this)">
+          <span class="acc-icon ai-mag"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+          <span class="acc-title">Security Audit</span>
+          <span class="acc-arr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="acc-body">
+          <div class="svc-tiers">
+            <div class="svc-tier">
+              <div class="svc-tier-name">Small Game</div>
+              <div class="svc-price">50 <small>Robux</small></div>
+              <ul class="svc-feats"><li>Full codebase review</li><li>Written security report</li></ul>
+            </div>
+            <div class="svc-tier">
+              <div class="svc-tier-name">Medium Game</div>
+              <div class="svc-price">100 <small>Robux</small></div>
+              <ul class="svc-feats"><li>Full codebase review</li><li>Written security report</li><li>Priority recommendations</li></ul>
+            </div>
+            <div class="svc-tier">
+              <div class="svc-tier-name">Large Game</div>
+              <div class="svc-price">200 <small>Robux</small></div>
+              <ul class="svc-feats"><li>Deep codebase review</li><li>Detailed written report</li><li>Actionable fix roadmap</li></ul>
+            </div>
+          </div>
+          <div class="svc-note">All tiers include a <strong>written report</strong> outlining every vulnerability found and how to address it.</div>
+        </div>
+      </div>
+
+      <!-- Security Testing -->
+      <div class="acc-item">
+        <button class="acc-hd" onclick="toggleAcc(this)">
+          <span class="acc-icon ai-flask"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M6 21h12"/><path d="M10 3v9l-3.5 9"/><path d="M14 3v9l3.5 9"/></svg></span>
+          <span class="acc-title">Security Testing</span>
+          <span class="acc-arr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+        </button>
+        <div class="acc-body">
+          <div class="svc-tiers">
+            <div class="svc-tier">
+              <div class="svc-tier-name">Basic Testing</div>
+              <div class="svc-price">50 <small>Robux</small></div>
+              <ul class="svc-feats"><li>Common exploit attempts</li><li>Report of findings</li></ul>
+            </div>
+            <div class="svc-tier">
+              <div class="svc-tier-name">Full Penetration Test</div>
+              <div class="svc-price">150 <small>Robux</small></div>
+              <ul class="svc-feats"><li>Thorough exploit testing</li><li>Remote fuzzing</li><li>Detailed findings report</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /acc -->
+
+    <!-- Optional Extras -->
+    <div class="reveal">
+      <div style="margin-bottom:14px">
+        <span style="font-family:'JetBrains Mono',monospace;font-weight:700;font-size:15px">Optional Extras</span>
+        <span style="font-size:13px;color:var(--muted);margin-left:10px">Add to any service or package</span>
+      </div>
+      <div class="extras-grid">
+        <div class="extra-pill"><span>Priority Delivery</span><span class="extra-pill-price">+25 R$</span></div>
+        <div class="extra-pill"><span>Detailed Security Report</span><span class="extra-pill-price">+25 R$</span></div>
+        <div class="extra-pill"><span>Additional Custom Module</span><span class="extra-pill-price">+5–15 R$ each</span></div>
+        <div class="extra-pill"><span>One Week of Support</span><span class="extra-pill-price">+25 R$</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- NOTES -->
 <section class="section section-alt">
   <div class="wrap">
@@ -499,6 +946,59 @@ footer{padding:28px 22px;border-top:1px solid var(--border);background:var(--car
         <div>
           <div class="nt">Expectations</div>
           <div class="nb">These anti-cheats cannot stop every hacker, but they will stop most. Choose the best package for your game's scale.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WHY NULLGATE -->
+<section class="section" id="why">
+  <div class="wrap">
+    <div class="sec-center reveal">
+      <h2>Why Choose NullGate?</h2>
+      <p>Built differently from generic anti-cheat solutions.</p>
+    </div>
+    <div class="why-grid reveal">
+
+      <div class="why-item">
+        <div class="why-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div>
+          <div class="why-title">Server-Authoritative Design</div>
+          <div class="why-body">All validation runs server-side. Clients are never trusted — every action is verified before it takes effect.</div>
+        </div>
+      </div>
+
+      <div class="why-item">
+        <div class="why-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div>
+          <div class="why-title">Remote Security Built In</div>
+          <div class="why-body">Every commission includes hardened remotes by default — not bolted on as an afterthought.</div>
+        </div>
+      </div>
+
+      <div class="why-item">
+        <div class="why-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div>
+          <div class="why-title">Low Performance Impact</div>
+          <div class="why-body">Optimised for minimal server overhead. Security shouldn't come at the cost of your players' experience.</div>
+        </div>
+      </div>
+
+      <div class="why-item">
+        <div class="why-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div>
+          <div class="why-title">Custom Development</div>
+          <div class="why-body">No copy-paste solutions. Every script is written specifically for your game's structure and systems.</div>
+        </div>
+      </div>
+
+      <div class="why-item" style="grid-column:1/-1">
+        <div class="why-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div>
+          <div class="why-title">Ongoing Support</div>
+          <div class="why-body">Questions after delivery? I'm available to help. Optional one-week support add-on available for any commission.</div>
         </div>
       </div>
 
@@ -635,6 +1135,38 @@ function copyIt() {
     ok.style.display = "block"; hint.style.display = "none";
     setTimeout(() => { ok.style.display = "none"; hint.style.display = ""; }, 2200);
   });
+}
+
+/* STAT COUNT-UP */
+const statObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    e.target.querySelectorAll(".stat-num").forEach(el => {
+      const target = parseFloat(el.dataset.target);
+      const suffix = el.dataset.suffix || "";
+      const dec    = parseInt(el.dataset.decimal || "0");
+      const dur    = 1200;
+      const steps  = 40;
+      let step = 0;
+      const t = setInterval(() => {
+        step++;
+        const val = target * (step / steps);
+        el.textContent = (dec > 0 ? val.toFixed(dec) : Math.round(val)) + suffix;
+        if (step >= steps) { el.textContent = (dec > 0 ? target.toFixed(dec) : target) + suffix; clearInterval(t); }
+      }, dur / steps);
+    });
+    statObs.unobserve(e.target);
+  });
+}, { threshold: 0.3 });
+const statsRow = document.querySelector(".stats-row");
+if (statsRow) statObs.observe(statsRow);
+
+/* ACCORDION */
+function toggleAcc(btn) {
+  const item = btn.closest(".acc-item");
+  const isOpen = item.classList.contains("open");
+  document.querySelectorAll(".acc-item.open").forEach(el => el.classList.remove("open"));
+  if (!isOpen) item.classList.add("open");
 }
 
 /* TABLE DRAG SCROLL */
